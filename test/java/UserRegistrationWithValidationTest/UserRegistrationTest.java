@@ -42,4 +42,39 @@ public class UserRegistrationTest {
          boolean result=validator.validateName("Vinayshhshsh");
          Assert.assertEquals(true, result);
     }
+    
+    @Test 
+    public void givenLastName_WhenProper_ShouldReturnTrue() {
+           UserRegistrationValidator validator=new UserRegistrationValidator();
+           boolean result=validator.validateName("Hirem");
+           Assert.assertEquals(true, result);
+       }
+       
+       @Test
+       public void givenLastName_WhenShort_ShouldReturnFalse() {
+       	 UserRegistrationValidator validator=new UserRegistrationValidator();
+            boolean result=validator.validateName("Hi");
+            Assert.assertEquals(false, result);
+       }
+       
+       @Test
+       public void givenLastName_WhenStartWithSpecialChars_ShouldReturnFalse() {
+       	 UserRegistrationValidator validator=new UserRegistrationValidator();
+            boolean result=validator.validateName("$Vinay");
+            Assert.assertEquals(false, result);
+       }
+       
+       @Test
+       public void givenLastName_WhenStartWithSmallLetter_ShouldReturnFalse() {
+       	 UserRegistrationValidator validator=new UserRegistrationValidator();
+            boolean result=validator.validateName("hiremath");
+            Assert.assertEquals(false, result);
+       }
+       
+       @Test
+       public void givenLastName_WhenLongAndStartWithCapital_ShouldReturnTrue() {
+       	 UserRegistrationValidator validator=new UserRegistrationValidator();
+            boolean result=validator.validateName("Vinayshhshsh");
+            Assert.assertEquals(true, result);
+       }
 }
