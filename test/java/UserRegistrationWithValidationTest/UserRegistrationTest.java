@@ -154,5 +154,40 @@ public class UserRegistrationTest {
 		boolean result = validator.phoneValidation("91 911047339454");
 		Assert.assertEquals(false, result);
 	}
+	
+	@Test
+	public void givenPassword_WhenProper_ShouldReturnTrue() {
+		UserRegistrationValidator validator = new UserRegistrationValidator();
+		boolean result = validator.passwordValidation("A1@abcdefgh");
+		Assert.assertEquals(true, result);
+	}
+	
+	@Test
+	public void givenPassword_WhenNoCapitalLetter_ShouldReturnFalse() {
+		UserRegistrationValidator validator = new UserRegistrationValidator();
+		boolean result = validator.passwordValidation("1@abcdefgh");
+		Assert.assertEquals(false, result);
+	}
+	
+	@Test
+	public void givenPassword_WhenNoNumberLetter_ShouldReturnFalse() {
+		UserRegistrationValidator validator = new UserRegistrationValidator();
+		boolean result = validator.passwordValidation("A@abcdefgh");
+		Assert.assertEquals(false, result);
+	}
+	
+	@Test
+	public void givenPassword_WhenNoSpecialLetter_ShouldReturnFalse() {
+		UserRegistrationValidator validator = new UserRegistrationValidator();
+		boolean result = validator.passwordValidation("1Aabcdefgh");
+		Assert.assertEquals(false, result);
+	}
+	
+	@Test
+	public void givenPassword_WhenLessThenEightCharacters_ShouldReturnFalse() {
+		UserRegistrationValidator validator = new UserRegistrationValidator();
+		boolean result = validator.passwordValidation("1A@ab");
+		Assert.assertEquals(false, result);
+	}
 
 }
