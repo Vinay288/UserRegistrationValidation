@@ -7,17 +7,17 @@ import java.util.regex.Pattern;
 
 public class UserRegistrationValidator {
 	public static boolean passwordValidation(String password) {
-		String passwordValidation = "^.*(?=.{8,})(?=..*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*$";
+		String passwordValidation = "^.*(?=.{8,})(?=..*[0-9])(?=..*[a-z])(?=.*[A-Z])(?=..[@#$%^&+=]).?.*$";
 		return Pattern.matches(passwordValidation, password);
 	}
 
 	public static boolean phoneValidation(String phoneNumber) {
-		String phoneValidation = "91\\s[0-9]{10}";
+		String phoneValidation = "^[0-9]{1,2}\\s[0-9]{10}";
 		return Pattern.matches(phoneValidation, phoneNumber);
 	}
 
 	public static boolean emailValidation(String email) {
-		String emailValidation = "abc(\\.[a-z]+)?\\@bl\\.co(\\.in)?";
+		String emailValidation = "abc([-//.//+]?[a-z0-9]+)?\\@[a-z0-9]+\\.[a-z]{2,}(\\.[a-z]+)?";
 		return Pattern.matches(emailValidation, email);
 
 	}
