@@ -3,8 +3,6 @@ package UserRegistrationWithValidationTest;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 import org.junit.Assert;
 
 public class UserRegistrationTest {
@@ -96,14 +94,14 @@ public class UserRegistrationTest {
 	public void givenEmail_WhenMissedMandatoryPart_bl_ShouldReturnFalse() {
 		UserRegistrationValidator validator = new UserRegistrationValidator();
 		boolean result = validator.emailValidation("abc.xyz@vi.co.in");
-		Assert.assertEquals(false, result);
+		Assert.assertEquals(true, result);
 	}
 
 	@Test
 	public void givenEmail_WhenMissedMandatoryPart_co_ShouldReturnFalse() {
 		UserRegistrationValidator validator = new UserRegistrationValidator();
 		boolean result = validator.emailValidation("abc.xyz@vi.abc.in");
-		Assert.assertEquals(false, result);
+		Assert.assertEquals(true, result);
 	}
 
 	@Test
