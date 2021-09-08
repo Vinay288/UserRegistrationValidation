@@ -77,4 +77,62 @@ public class UserRegistrationTest {
             boolean result=validator.validateName("Vinayshhshsh");
             Assert.assertEquals(true, result);
        }
+       
+       @Test
+       public void givenEmail_WhenProper_ShouldReturnTrue() {
+    	   UserRegistrationValidator validator=new UserRegistrationValidator();
+    	   boolean result=validator.emailValidation("abc.xyz@bl.co.in");
+           Assert.assertEquals(true, result);
+       }
+       
+       @Test
+       public void givenEmail_WhenMissedMandatoryPart_abc_ShouldReturnFalse() {
+    	   UserRegistrationValidator validator=new UserRegistrationValidator();
+    	   boolean result=validator.emailValidation("vin.xyz@bl.co.in");
+           Assert.assertEquals(false, result);
+       }
+       
+       @Test
+       public void givenEmail_WhenMissedMandatoryPart_bl_ShouldReturnFalse() {
+    	   UserRegistrationValidator validator=new UserRegistrationValidator();
+    	   boolean result=validator.emailValidation("abc.xyz@vi.co.in");
+           Assert.assertEquals(false, result);
+       }
+       
+       @Test
+       public void givenEmail_WhenMissedMandatoryPart_co_ShouldReturnFalse() {
+    	   UserRegistrationValidator validator=new UserRegistrationValidator();
+    	   boolean result=validator.emailValidation("abc.xyz@vi.abc.in");
+           Assert.assertEquals(false, result);
+       }
+       
+       @Test
+       public void givenEmail_WhenMissedOpionalPart_xyz_ShouldReturnTrue() {
+    	   UserRegistrationValidator validator=new UserRegistrationValidator();
+    	   boolean result=validator.emailValidation("abc@bl.co.in");
+           Assert.assertEquals(true, result);
+       }
+       
+       @Test
+       public void givenEmail_WhenMissedOpionalPart_in_ShouldReturnTrue() {
+    	   UserRegistrationValidator validator=new UserRegistrationValidator();
+    	   boolean result=validator.emailValidation("abc@bl.co");
+           Assert.assertEquals(true, result);
+       }
+       
+       @Test
+       public void givenEmail_WhenMisplaced_Symbol_ShouldReturnFalse() {
+    	   UserRegistrationValidator validator=new UserRegistrationValidator();
+    	   boolean result=validator.emailValidation("abcbl.co@.co");
+           Assert.assertEquals(false, result);
+       }
+       
+       @Test
+       public void givenEmail_WhenMisplaced_dot_ShouldReturnFalse() {
+    	   UserRegistrationValidator validator=new UserRegistrationValidator();
+    	   boolean result=validator.emailValidation("abc.xyz@vico.in.");
+           Assert.assertEquals(false, result);
+       }
+       
+       
 }
