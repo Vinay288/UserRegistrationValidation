@@ -5,10 +5,24 @@ package UserRegistrationWithValidationTest;
 
 import java.util.regex.Pattern;
 
+import UserRegistrationWithValidationTest.PasswordValidationException.PasswordExceptionType;
+
 public class UserRegistrationValidator {
-	public static boolean passwordValidation(String password) {
+	public static boolean passwordValidation(String password) throws PasswordValidationException {
+		try {
+		if (password.length() == 0) {
+			throw new PasswordValidationException(PasswordExceptionType.PASSWORD_EMPTY, "Enter proper password");
+		}
 		String passwordValidation = "^.*(?=.{8,})(?=..*[0-9])(?=..*[a-z])(?=.*[A-Z])(?=..[@#$%^&+=]).?.*$";
-		return Pattern.matches(passwordValidation, password);
+		if(Pattern.matches(passwordValidation, password))
+			return true;
+		else {
+			throw new PasswordValidationException(PasswordExceptionType.PASSWORD_INVALID,"enter valid password");
+		}
+		}
+		catch (NullPointerException e) {
+			throw new PasswordValidationException(PasswordExceptionType.PASSWORD_NULL, "enter proper password");
+		}
 	}
 
 	public static boolean phoneValidation(String phoneNumber) {
