@@ -4,10 +4,12 @@ package UserRegistrationWithValidationTest;
 import org.junit.Test;
 
 import UserRegistrationWithValidationTest.PasswordValidationException.PasswordExceptionType;
+import UserRegistrationWithValidationTest.PhoneNumberValidationException.PhoneNumberExceptionType;
 
 import org.junit.Assert;
 
 public class UserRegistrationTest {
+	
 	@Test
 	public void givenFirstName_WhenProper_ShouldReturnTrue() {
 		UserRegistrationValidator validator = new UserRegistrationValidator();
@@ -141,33 +143,51 @@ public class UserRegistrationTest {
 	@Test
 	public void givenPhoneNumber_WhenProper_ShouldReturnTrue() {
 		UserRegistrationValidator validator = new UserRegistrationValidator();
-		boolean result = validator.phoneValidation("91 9110473394");
+		boolean result=false;
+		try {
+			result = validator.phoneValidation("91 9110473394");
+		} catch (PhoneNumberValidationException e) {
+			e.printStackTrace();
+		}
 		Assert.assertEquals(true, result);
 	}
 
 	@Test
-	public void givenPhoneNumber_WhenNoSpace_ShouldReturnFalse() {
+	public void givenPhoneNumber_WhenNoSpace_ShouldThrowInvalidException() {
 		UserRegistrationValidator validator = new UserRegistrationValidator();
-		boolean result = validator.phoneValidation("919110473394");
-		Assert.assertEquals(false, result);
+		boolean result;
+		try {
+			result = validator.phoneValidation("919110473394");
+		} catch (PhoneNumberValidationException e) {
+			Assert.assertEquals(PhoneNumberExceptionType.PHONENUMBER_INVALID, e.type);
+		}
 	}
 
 	@Test
-	public void givenPhoneNumber_WhenLengthIsMore_ShouldReturnFalse() {
+	public void givenPhoneNumber_WhenLengthIsMore_ShouldThrowInvalidException()  {
+		try {
 		UserRegistrationValidator validator = new UserRegistrationValidator();
 		boolean result = validator.phoneValidation("91 911047339454");
-		Assert.assertEquals(false, result);
+		} catch (PhoneNumberValidationException e) {
+			Assert.assertEquals(PhoneNumberExceptionType.PHONENUMBER_INVALID, e.type);
+		}
 	}
 
 	@Test
-	public void givenPassword_WhenProper_ShouldReturnTrue() throws PasswordValidationException {
+	public void givenPassword_WhenProper_ShouldReturnTrue() {
 		UserRegistrationValidator validator = new UserRegistrationValidator();
-		boolean result = validator.passwordValidation("A1@abcdefgh");
-		Assert.assertEquals(true, result);
+		boolean result=false;
+		try {
+			result = validator.passwordValidation("A1@abcdefgh");
+			
+		} catch (PasswordValidationException e) {
+			e.printStackTrace();
+		}
+		Assert.assertEquals(true, result);		
 	}
 
 	@Test
-	public void givenPassword_WhenNoCapitalLetter_ShouldThrowInvalidException() throws PasswordValidationException {
+	public void givenPassword_WhenNoCapitalLetter_ShouldThrowInvalidException() {
 		try {
 			UserRegistrationValidator validator = new UserRegistrationValidator();
 			boolean result = validator.passwordValidation("1@abcdefgh");
@@ -177,7 +197,7 @@ public class UserRegistrationTest {
 	}
 
 	@Test
-	public void givenPassword_WhenNoNumberLetter_ShouldThrowInvalidException() throws PasswordValidationException {
+	public void givenPassword_WhenNoNumberLetter_ShouldThrowInvalidException() {
 		try {
 			UserRegistrationValidator validator = new UserRegistrationValidator();
 			boolean result = validator.passwordValidation("A@abcdefgh");
@@ -187,7 +207,7 @@ public class UserRegistrationTest {
 	}
 
 	@Test
-	public void givenPassword_WhenNoSpecialLetter_ShouldThrowInvalidException() throws PasswordValidationException {
+	public void givenPassword_WhenNoSpecialLetter_ShouldThrowInvalidException() {
 		try {
 			UserRegistrationValidator validator = new UserRegistrationValidator();
 			boolean result = validator.passwordValidation("1Aabcdefgh");
@@ -209,7 +229,7 @@ public class UserRegistrationTest {
 	}
 
 	@Test
-	public void givenPassword_WhenNull_ShouldThrowException() throws PasswordValidationException {
+	public void givenPassword_WhenNull_ShouldThrowException() {
 		try {
 			UserRegistrationValidator validator = new UserRegistrationValidator();
 			boolean result = validator.passwordValidation(null);
@@ -219,7 +239,7 @@ public class UserRegistrationTest {
 	}
 
 	@Test
-	public void givenPassword_WhenEmpty_ShouldThrowException() throws PasswordValidationException {
+	public void givenPassword_WhenEmpty_ShouldThrowException() {
 		try {
 			UserRegistrationValidator validator = new UserRegistrationValidator();
 			boolean result = validator.passwordValidation("");
