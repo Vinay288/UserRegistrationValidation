@@ -6,28 +6,42 @@ package UserRegistrationWithValidationTest;
 import java.util.regex.Pattern;
 
 import UserRegistrationWithValidationTest.PasswordValidationException.PasswordExceptionType;
+import UserRegistrationWithValidationTest.PhoneNumberValidationException.PhoneNumberExceptionType;
 
 public class UserRegistrationValidator {
 	public static boolean passwordValidation(String password) throws PasswordValidationException {
 		try {
-		if (password.length() == 0) {
-			throw new PasswordValidationException(PasswordExceptionType.PASSWORD_EMPTY, "Enter proper password");
-		}
-		String passwordValidation = "^.*(?=.{8,})(?=..*[0-9])(?=..*[a-z])(?=.*[A-Z])(?=..[@#$%^&+=]).?.*$";
-		if(Pattern.matches(passwordValidation, password))
-			return true;
-		else {
-			throw new PasswordValidationException(PasswordExceptionType.PASSWORD_INVALID,"enter valid password");
-		}
-		}
-		catch (NullPointerException e) {
+			if (password.length() == 0) {
+				throw new PasswordValidationException(PasswordExceptionType.PASSWORD_EMPTY, "Enter proper password");
+			}
+			String passwordValidation = "^.*(?=.{8,})(?=..*[0-9])(?=..*[a-z])(?=.*[A-Z])(?=..[@#$%^&+=]).?.*$";
+			if (Pattern.matches(passwordValidation, password))
+				return true;
+			else {
+				throw new PasswordValidationException(PasswordExceptionType.PASSWORD_INVALID, "enter valid password");
+			}
+		} catch (NullPointerException e) {
 			throw new PasswordValidationException(PasswordExceptionType.PASSWORD_NULL, "enter proper password");
 		}
 	}
 
-	public static boolean phoneValidation(String phoneNumber) {
-		String phoneValidation = "^[0-9]{1,2}\\s[0-9]{10}";
-		return Pattern.matches(phoneValidation, phoneNumber);
+	public static boolean phoneValidation(String phoneNumber) throws PhoneNumberValidationException {
+		try {
+			if (phoneNumber.length() == 0) {
+				throw new PhoneNumberValidationException(PhoneNumberExceptionType.PHONENUMBER_EMPTY,
+						"enter valid phonenumber");
+			}
+			String phoneValidation = "^[0-9]{1,2}\\s[0-9]{10}";
+			if (Pattern.matches(phoneValidation, phoneNumber))
+				return true;
+			else
+				throw new PhoneNumberValidationException(PhoneNumberExceptionType.PHONENUMBER_INVALID,
+						"enter valid phonenumber");
+
+		} catch (NullPointerException e) {
+			throw new PhoneNumberValidationException(PhoneNumberExceptionType.PHONENUMBER_NULL,
+					"enter valid phonenumber");
+		}
 	}
 
 	public static boolean emailValidation(String email) {
@@ -36,8 +50,13 @@ public class UserRegistrationValidator {
 
 	}
 
-	public static boolean validateName(String firstName) {
+	public static boolean validateFirstName(String firstName) {
 		String nameValidation = "^[A-Z][A-Za-z]{2,}$";
 		return Pattern.matches(nameValidation, firstName);
+	}
+	
+	public static boolean validateLastName(String lastName) {
+		String nameValidation = "^[A-Z][A-Za-z]{2,}$";
+		return Pattern.matches(nameValidation, lastName);
 	}
 }
