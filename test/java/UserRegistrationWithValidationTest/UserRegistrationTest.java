@@ -3,13 +3,14 @@ package UserRegistrationWithValidationTest;
 
 import org.junit.Test;
 
+import UserRegistrationWithValidationTest.EmailValidationException.EmailValidationExceptionType;
 import UserRegistrationWithValidationTest.PasswordValidationException.PasswordExceptionType;
 import UserRegistrationWithValidationTest.PhoneNumberValidationException.PhoneNumberExceptionType;
 
 import org.junit.Assert;
 
 public class UserRegistrationTest {
-	
+
 	@Test
 	public void givenFirstName_WhenProper_ShouldReturnTrue() {
 		UserRegistrationValidator validator = new UserRegistrationValidator();
@@ -87,69 +88,148 @@ public class UserRegistrationTest {
 	@Test
 	public void givenEmail_WhenProper_ShouldReturnTrue() {
 		UserRegistrationValidator validator = new UserRegistrationValidator();
-		boolean result = validator.emailValidation("abc.xyz@bl.co.in");
+		boolean result = false;
+		try {
+			result = validator.emailValidation("abc.xyz@bl.co.in");
+		} catch (EmailValidationException e) {
+			e.printStackTrace();
+		}
 		Assert.assertEquals(true, result);
 	}
 
 	@Test
-	public void givenEmail_WhenMissedMandatoryPart_abc_ShouldReturnFalse() {
+	public void givenEmail_WhenNull_ShouldThrowNullException() {
 		UserRegistrationValidator validator = new UserRegistrationValidator();
-		boolean result = validator.emailValidation("vin.xyz@bl.co.in");
-		Assert.assertEquals(false, result);
+		boolean result;
+		try {
+			result = validator.emailValidation(null);
+		} catch (EmailValidationException e) {
+			Assert.assertEquals(EmailValidationExceptionType.EMAIL_NULL, e.type);
+		}
 	}
 
 	@Test
-	public void givenEmail_WhenMissedMandatoryPart_bl_ShouldReturnFalse() {
+	public void givenEmail_WhenNull_ShouldThrowEmptyException() {
 		UserRegistrationValidator validator = new UserRegistrationValidator();
-		boolean result = validator.emailValidation("abc.xyz@vi.co.in");
-		Assert.assertEquals(true, result);
+		boolean result;
+		try {
+			result = validator.emailValidation("");
+		} catch (EmailValidationException e) {
+			Assert.assertEquals(EmailValidationExceptionType.EMAIL_EMPTY, e.type);
+		}
 	}
 
 	@Test
-	public void givenEmail_WhenMissedMandatoryPart_co_ShouldReturnFalse() {
+	public void givenEmail_WhenMissedMandatoryPart_abc_ShouldThrowInvalidException() {
 		UserRegistrationValidator validator = new UserRegistrationValidator();
-		boolean result = validator.emailValidation("abc.xyz@vi.abc.in");
-		Assert.assertEquals(true, result);
+		boolean result;
+		try {
+			result = validator.emailValidation("xyz@bl.co.in");
+		} catch (EmailValidationException e) {
+			Assert.assertEquals(EmailValidationExceptionType.EMAIL_INVALID, e.type);
+		}
+	}
+
+	@Test
+	public void givenEmail_WhenMissedMandatoryPart_bl_ShouldThrowInvalidException() {
+		UserRegistrationValidator validator = new UserRegistrationValidator();
+		boolean result;
+		try {
+			result = validator.emailValidation("abc.xyz@co.in");
+		} catch (EmailValidationException e) {
+			Assert.assertEquals(EmailValidationExceptionType.EMAIL_INVALID, e.type);
+		}
+	}
+
+	@Test
+	public void givenEmail_WhenMissedMandatoryPart_co_ShouldThrowInvalidException() {
+		UserRegistrationValidator validator = new UserRegistrationValidator();
+		boolean result = false;
+		try {
+			result = validator.emailValidation("abc.xyz@vi");
+		} catch (EmailValidationException e) {
+			Assert.assertEquals(EmailValidationExceptionType.EMAIL_INVALID, e.type);
+		}
 	}
 
 	@Test
 	public void givenEmail_WhenMissedOpionalPart_xyz_ShouldReturnTrue() {
 		UserRegistrationValidator validator = new UserRegistrationValidator();
-		boolean result = validator.emailValidation("abc@bl.co.in");
+		boolean result = false;
+		try {
+			result = validator.emailValidation("abc@bl.co.in");
+		} catch (EmailValidationException e) {
+			e.printStackTrace();
+		}
 		Assert.assertEquals(true, result);
 	}
 
 	@Test
 	public void givenEmail_WhenMissedOpionalPart_in_ShouldReturnTrue() {
 		UserRegistrationValidator validator = new UserRegistrationValidator();
-		boolean result = validator.emailValidation("abc@bl.co");
+		boolean result = false;
+		try {
+			result = validator.emailValidation("abc@bl.co");
+		} catch (EmailValidationException e) {
+			e.printStackTrace();
+		}
 		Assert.assertEquals(true, result);
 	}
 
 	@Test
-	public void givenEmail_WhenMisplaced_Symbol_ShouldReturnFalse() {
+	public void givenEmail_WhenMisplaced_Symbol_ShouldThrowInvalidException() {
 		UserRegistrationValidator validator = new UserRegistrationValidator();
-		boolean result = validator.emailValidation("abcbl.co@.co");
-		Assert.assertEquals(false, result);
+		boolean result;
+		try {
+			result = validator.emailValidation("abcbl.co@.co");
+		} catch (EmailValidationException e) {
+			Assert.assertEquals(EmailValidationExceptionType.EMAIL_INVALID, e.type);
+		}
 	}
 
 	@Test
-	public void givenEmail_WhenMisplaced_dot_ShouldReturnFalse() {
+	public void givenEmail_WhenMisplaced_dot_ShouldThrowInvalidException() {
 		UserRegistrationValidator validator = new UserRegistrationValidator();
-		boolean result = validator.emailValidation("abc.xyz@vico.in.");
-		Assert.assertEquals(false, result);
+		boolean result;
+		try {
+			result = validator.emailValidation("abc.xyz@vico.in.");
+		} catch (EmailValidationException e) {
+			Assert.assertEquals(EmailValidationExceptionType.EMAIL_INVALID, e.type);
+		}
 	}
 
 	@Test
 	public void givenPhoneNumber_WhenProper_ShouldReturnTrue() {
 		UserRegistrationValidator validator = new UserRegistrationValidator();
-		boolean result=false;
+		boolean result = false;
 		try {
 			result = validator.phoneValidation("91 9110473394");
 		} catch (PhoneNumberValidationException e) {
 			e.printStackTrace();
 		}
 		Assert.assertEquals(true, result);
+	}
+
+	@Test
+	public void givenPhoneNumber_WhenNull_ShouldThrowNullException() {
+		UserRegistrationValidator validator = new UserRegistrationValidator();
+		boolean result;
+		try {
+			result = validator.phoneValidation(null);
+		} catch (PhoneNumberValidationException e) {
+			Assert.assertEquals(PhoneNumberExceptionType.PHONENUMBER_NULL, e.type);
+		}
+	}
+
+	@Test
+	public void givenPhoneNumber_WhenEmpty_ShouldThrowNullException() {
+		UserRegistrationValidator validator = new UserRegistrationValidator();
+		boolean result;
+		try {
+			result = validator.phoneValidation("");
+		} catch (PhoneNumberValidationException e) {
+			Assert.assertEquals(PhoneNumberExceptionType.PHONENUMBER_EMPTY, e.type);
+		}
 	}
 
 	@Test
@@ -164,10 +244,10 @@ public class UserRegistrationTest {
 	}
 
 	@Test
-	public void givenPhoneNumber_WhenLengthIsMore_ShouldThrowInvalidException()  {
+	public void givenPhoneNumber_WhenLengthIsMore_ShouldThrowInvalidException() {
 		try {
-		UserRegistrationValidator validator = new UserRegistrationValidator();
-		boolean result = validator.phoneValidation("91 911047339454");
+			UserRegistrationValidator validator = new UserRegistrationValidator();
+			boolean result = validator.phoneValidation("91 911047339454");
 		} catch (PhoneNumberValidationException e) {
 			Assert.assertEquals(PhoneNumberExceptionType.PHONENUMBER_INVALID, e.type);
 		}
@@ -176,14 +256,14 @@ public class UserRegistrationTest {
 	@Test
 	public void givenPassword_WhenProper_ShouldReturnTrue() {
 		UserRegistrationValidator validator = new UserRegistrationValidator();
-		boolean result=false;
+		boolean result = false;
 		try {
 			result = validator.passwordValidation("A1@abcdefgh");
-			
+
 		} catch (PasswordValidationException e) {
 			e.printStackTrace();
 		}
-		Assert.assertEquals(true, result);		
+		Assert.assertEquals(true, result);
 	}
 
 	@Test
