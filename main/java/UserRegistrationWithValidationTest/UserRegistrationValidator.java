@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 
 import UserRegistrationWithValidationTest.EmailValidationException.EmailValidationExceptionType;
 import UserRegistrationWithValidationTest.FirstNameValidationException.FirstNameExceptionType;
+import UserRegistrationWithValidationTest.LastNameValidationException.LastNameExceptionType;
 import UserRegistrationWithValidationTest.PasswordValidationException.PasswordExceptionType;
 import UserRegistrationWithValidationTest.PhoneNumberValidationException.PhoneNumberExceptionType;
 
@@ -64,22 +65,33 @@ public class UserRegistrationValidator {
 
 	public static boolean validateFirstName(String firstName) throws FirstNameValidationException {
 		try {
-			if(firstName.length()==0)
+			if (firstName.length() == 0)
 				throw new FirstNameValidationException(FirstNameExceptionType.FIRSTNAME_EMPTY, "Add proper first name");
-		String nameValidation = "^[A-Z][A-Za-z]{2,}$";
-		if(Pattern.matches(nameValidation, firstName))
-			return true;
-		else {
-			throw new FirstNameValidationException(FirstNameExceptionType.FIRSTNAME_INVALID, "ADD proper first name");
-		}
-		}
-		catch (NullPointerException e) {
+			String nameValidation = "^[A-Z][A-Za-z]{2,}$";
+			if (Pattern.matches(nameValidation, firstName))
+				return true;
+			else {
+				throw new FirstNameValidationException(FirstNameExceptionType.FIRSTNAME_INVALID,
+						"ADD proper first name");
+			}
+		} catch (NullPointerException e) {
 			throw new FirstNameValidationException(FirstNameExceptionType.FIRSTNAME_NULL, "enter proper first name");
 		}
 	}
 
-	public static boolean validateLastName(String lastName) {
-		String nameValidation = "^[A-Z][A-Za-z]{2,}$";
-		return Pattern.matches(nameValidation, lastName);
+	public static boolean validateLastName(String lastName) throws LastNameValidationException {
+		try {
+			if (lastName.length() == 0) {
+				throw new LastNameValidationException(LastNameExceptionType.LASTNAME_EMPTY, "enter proper last name");
+			}
+			String nameValidation = "^[A-Z][A-Za-z]{2,}$";
+			if (Pattern.matches(nameValidation, lastName))
+				return true;
+			else {
+				throw new LastNameValidationException(LastNameExceptionType.LASTNAME_INVALID, "enter proper last name");
+			}
+		} catch (NullPointerException e) {
+			throw new LastNameValidationException(LastNameExceptionType.LASTNAME_NULL, "enter proper last name");
+		}
 	}
 }
