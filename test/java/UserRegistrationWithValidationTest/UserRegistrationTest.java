@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import UserRegistrationWithValidationTest.EmailValidationException.EmailValidationExceptionType;
 import UserRegistrationWithValidationTest.FirstNameValidationException.FirstNameExceptionType;
+import UserRegistrationWithValidationTest.LastNameValidationException.LastNameExceptionType;
 import UserRegistrationWithValidationTest.PasswordValidationException.PasswordExceptionType;
 import UserRegistrationWithValidationTest.PhoneNumberValidationException.PhoneNumberExceptionType;
 
@@ -15,7 +16,7 @@ public class UserRegistrationTest {
 	@Test
 	public void givenFirstName_WhenProper_ShouldReturnTrue() {
 		UserRegistrationValidator validator = new UserRegistrationValidator();
-		boolean result=false;
+		boolean result = false;
 		try {
 			result = validator.validateFirstName("Vinay");
 		} catch (FirstNameValidationException e) {
@@ -24,28 +25,29 @@ public class UserRegistrationTest {
 		}
 		Assert.assertEquals(true, result);
 	}
+
 	@Test
 	public void givenFirstName_WhenNull_ShouldThrowNullException() {
 		UserRegistrationValidator validator = new UserRegistrationValidator();
-		boolean result=false;
+		boolean result = false;
 		try {
 			result = validator.validateFirstName(null);
 		} catch (FirstNameValidationException e) {
 			Assert.assertEquals(FirstNameExceptionType.FIRSTNAME_NULL, e.type);
 		}
 	}
-	
+
 	@Test
 	public void givenFirstName_WhenEmpty_ShouldThrowEmptyException() {
 		UserRegistrationValidator validator = new UserRegistrationValidator();
-		boolean result=false;
+		boolean result = false;
 		try {
 			result = validator.validateFirstName("");
 		} catch (FirstNameValidationException e) {
 			Assert.assertEquals(FirstNameExceptionType.FIRSTNAME_EMPTY, e.type);
 		}
 	}
-	
+
 	@Test
 	public void givenFirstName_WhenShort_ShouldInvalidException() {
 		UserRegistrationValidator validator = new UserRegistrationValidator();
@@ -82,7 +84,7 @@ public class UserRegistrationTest {
 	@Test
 	public void givenFirstName_WhenLongAndStartWithCapital_ShouldReturnTrue() {
 		UserRegistrationValidator validator = new UserRegistrationValidator();
-		boolean result=false;
+		boolean result = false;
 		try {
 			result = validator.validateFirstName("Vinayshhshsh");
 		} catch (FirstNameValidationException e) {
@@ -94,13 +96,35 @@ public class UserRegistrationTest {
 	@Test
 	public void givenLastName_WhenProper_ShouldReturnTrue() {
 		UserRegistrationValidator validator = new UserRegistrationValidator();
-		boolean result=false;
+		boolean result = false;
 		try {
-			result = validator.validateFirstName("Hirem");
-		} catch (FirstNameValidationException e) {
+			result = validator.validateLastName("Hirem");
+		} catch (LastNameValidationException e) {
 			e.printStackTrace();
 		}
 		Assert.assertEquals(true, result);
+	}
+
+	@Test
+	public void givenLastName_WhenNull_ShouldThrownNullException() {
+		UserRegistrationValidator validator = new UserRegistrationValidator();
+		boolean result = false;
+		try {
+			result = validator.validateLastName(null);
+		} catch (LastNameValidationException e) {
+			Assert.assertEquals(LastNameExceptionType.LASTNAME_NULL, e.type);
+		}
+	}
+
+	@Test
+	public void givenLastName_WhenEmpty_ShouldThrownNullException() {
+		UserRegistrationValidator validator = new UserRegistrationValidator();
+		boolean result = false;
+		try {
+			result = validator.validateLastName("");
+		} catch (LastNameValidationException e) {
+			Assert.assertEquals(LastNameExceptionType.LASTNAME_EMPTY, e.type);
+		}
 	}
 
 	@Test
@@ -108,9 +132,9 @@ public class UserRegistrationTest {
 		UserRegistrationValidator validator = new UserRegistrationValidator();
 		boolean result;
 		try {
-			result = validator.validateFirstName("Hi");
-		} catch (FirstNameValidationException e) {
-			Assert.assertEquals(FirstNameExceptionType.FIRSTNAME_INVALID, e.type);
+			result = validator.validateLastName("Hi");
+		} catch (LastNameValidationException e) {
+			Assert.assertEquals(LastNameExceptionType.LASTNAME_INVALID, e.type);
 		}
 	}
 
@@ -119,24 +143,32 @@ public class UserRegistrationTest {
 		UserRegistrationValidator validator = new UserRegistrationValidator();
 		boolean result;
 		try {
-			result = validator.validateFirstName("$Vinay");
-		} catch (FirstNameValidationException e) {
-			Assert.assertEquals(FirstNameExceptionType.FIRSTNAME_INVALID, e.type);
+			result = validator.validateLastName("$Vinay");
+		} catch (LastNameValidationException e) {
+			Assert.assertEquals(LastNameExceptionType.LASTNAME_INVALID, e.type);
 		}
 	}
 
 	@Test
 	public void givenLastName_WhenStartWithSmallLetter_ShouldReturnFalse() {
 		UserRegistrationValidator validator = new UserRegistrationValidator();
-		boolean result = validator.validateLastName("hiremath");
-		Assert.assertEquals(false, result);
+		boolean result;
+		try {
+			result = validator.validateLastName("hiremath");
+		} catch (LastNameValidationException e) {
+			Assert.assertEquals(LastNameExceptionType.LASTNAME_INVALID, e.type);
+		}
 	}
 
 	@Test
 	public void givenLastName_WhenLongAndStartWithCapital_ShouldReturnTrue() {
 		UserRegistrationValidator validator = new UserRegistrationValidator();
-		boolean result = validator.validateLastName("Vinayshhshsh");
-		Assert.assertEquals(true, result);
+		boolean result;
+		try {
+			result = validator.validateLastName("Vinayshhshsh");
+		} catch (LastNameValidationException e) {
+			Assert.assertEquals(LastNameExceptionType.LASTNAME_INVALID, e.type);
+		}
 	}
 
 	@Test
