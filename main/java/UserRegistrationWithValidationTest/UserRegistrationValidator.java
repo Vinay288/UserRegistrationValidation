@@ -5,6 +5,7 @@ package UserRegistrationWithValidationTest;
 
 import java.util.regex.Pattern;
 
+import UserRegistrationWithValidationTest.EmailValidationException.EmailValidationExceptionType;
 import UserRegistrationWithValidationTest.PasswordValidationException.PasswordExceptionType;
 import UserRegistrationWithValidationTest.PhoneNumberValidationException.PhoneNumberExceptionType;
 
@@ -44,17 +45,27 @@ public class UserRegistrationValidator {
 		}
 	}
 
-	public static boolean emailValidation(String email) {
-		String emailValidation = "abc([-//.//+]?[a-z0-9]+)?\\@[a-z0-9]+\\.[a-z]{2,}(\\.[a-z]+)?";
-		return Pattern.matches(emailValidation, email);
-
+	public static boolean emailValidation(String email) throws EmailValidationException {
+		try {
+			if (email.length() == 0) {
+				throw new EmailValidationException(EmailValidationExceptionType.EMAIL_EMPTY, "enter proper email");
+			}
+			String emailValidation = "abc([-//.//+]?[a-z0-9]+)?\\@[a-z0-9]+\\.[a-z]{2,}(\\.[a-z]+)?";
+			if (Pattern.matches(emailValidation, email))
+				return true;
+			else {
+				throw new EmailValidationException(EmailValidationExceptionType.EMAIL_INVALID, "enter proper email");
+			}
+		} catch (NullPointerException e) {
+			throw new EmailValidationException(EmailValidationExceptionType.EMAIL_NULL, "enter proper email");
+		}
 	}
 
 	public static boolean validateFirstName(String firstName) {
 		String nameValidation = "^[A-Z][A-Za-z]{2,}$";
 		return Pattern.matches(nameValidation, firstName);
 	}
-	
+
 	public static boolean validateLastName(String lastName) {
 		String nameValidation = "^[A-Z][A-Za-z]{2,}$";
 		return Pattern.matches(nameValidation, lastName);
