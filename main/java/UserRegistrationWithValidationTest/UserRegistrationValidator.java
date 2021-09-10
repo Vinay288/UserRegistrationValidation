@@ -6,6 +6,7 @@ package UserRegistrationWithValidationTest;
 import java.util.regex.Pattern;
 
 import UserRegistrationWithValidationTest.EmailValidationException.EmailValidationExceptionType;
+import UserRegistrationWithValidationTest.FirstNameValidationException.FirstNameExceptionType;
 import UserRegistrationWithValidationTest.PasswordValidationException.PasswordExceptionType;
 import UserRegistrationWithValidationTest.PhoneNumberValidationException.PhoneNumberExceptionType;
 
@@ -61,9 +62,20 @@ public class UserRegistrationValidator {
 		}
 	}
 
-	public static boolean validateFirstName(String firstName) {
+	public static boolean validateFirstName(String firstName) throws FirstNameValidationException {
+		try {
+			if(firstName.length()==0)
+				throw new FirstNameValidationException(FirstNameExceptionType.FIRSTNAME_EMPTY, "Add proper first name");
 		String nameValidation = "^[A-Z][A-Za-z]{2,}$";
-		return Pattern.matches(nameValidation, firstName);
+		if(Pattern.matches(nameValidation, firstName))
+			return true;
+		else {
+			throw new FirstNameValidationException(FirstNameExceptionType.FIRSTNAME_INVALID, "ADD proper first name");
+		}
+		}
+		catch (NullPointerException e) {
+			throw new FirstNameValidationException(FirstNameExceptionType.FIRSTNAME_NULL, "enter proper first name");
+		}
 	}
 
 	public static boolean validateLastName(String lastName) {
