@@ -1,6 +1,6 @@
 package UserRegistrationWithValidationTest;
 
-public class EmailValidationException extends Exception {
+public class EmailValidationException extends RuntimeException {
 	enum EmailValidationExceptionType {
 		EMAIL_INVALID, EMAIL_NULL, EMAIL_EMPTY
 	}

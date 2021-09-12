@@ -1,6 +1,6 @@
 package UserRegistrationWithValidationTest;
 
-public class FirstNameValidationException extends Exception {
+public class FirstNameValidationException extends RuntimeException {
 
 	enum FirstNameExceptionType {
 		FIRSTNAME_NULL, FIRSTNAME_EMPTY,FIRSTNAME_INVALID

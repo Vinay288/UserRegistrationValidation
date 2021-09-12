@@ -1,6 +1,6 @@
 package UserRegistrationWithValidationTest;
 
-public class PasswordValidationException extends Exception {
+public class PasswordValidationException extends RuntimeException {
 	enum PasswordExceptionType {
 		PASSWORD_NULL, PASSWORD_EMPTY,PASSWORD_INVALID
 	}

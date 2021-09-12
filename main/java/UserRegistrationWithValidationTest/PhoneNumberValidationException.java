@@ -1,6 +1,6 @@
 package UserRegistrationWithValidationTest;
 
-public class PhoneNumberValidationException extends Exception {
+public class PhoneNumberValidationException extends RuntimeException {
 
 	enum PhoneNumberExceptionType {
 		PHONENUMBER_INVALID, PHONENUMBER_NULL, PHONENUMBER_EMPTY
