@@ -12,7 +12,7 @@ import UserRegistrationWithValidationTest.PasswordValidationException.PasswordEx
 import UserRegistrationWithValidationTest.PhoneNumberValidationException.PhoneNumberExceptionType;
 
 public class UserRegistrationValidator {
-	public static boolean passwordValidation(String password) throws PasswordValidationException {
+	public static boolean passwordValidation(String password) {
 		try {
 			if (password.length() == 0) {
 				throw new PasswordValidationException(PasswordExceptionType.PASSWORD_EMPTY, "Enter proper password");
@@ -28,7 +28,7 @@ public class UserRegistrationValidator {
 		}
 	}
 
-	public static boolean phoneValidation(String phoneNumber) throws PhoneNumberValidationException {
+	public static boolean phoneValidation(String phoneNumber) {
 		try {
 			if (phoneNumber.length() == 0) {
 				throw new PhoneNumberValidationException(PhoneNumberExceptionType.PHONENUMBER_EMPTY,
@@ -47,7 +47,7 @@ public class UserRegistrationValidator {
 		}
 	}
 
-	public static boolean emailValidation(String email) throws EmailValidationException {
+	public static boolean emailValidation(String email) {
 		try {
 			if (email.length() == 0) {
 				throw new EmailValidationException(EmailValidationExceptionType.EMAIL_EMPTY, "enter proper email");
@@ -63,7 +63,7 @@ public class UserRegistrationValidator {
 		}
 	}
 
-	public static boolean validateFirstName(String firstName) throws FirstNameValidationException {
+	public static boolean validateFirstName(String firstName) {
 		try {
 			if (firstName.length() == 0)
 				throw new FirstNameValidationException(FirstNameExceptionType.FIRSTNAME_EMPTY, "Add proper first name");
@@ -79,7 +79,7 @@ public class UserRegistrationValidator {
 		}
 	}
 
-	public static boolean validateLastName(String lastName) throws LastNameValidationException {
+	public static boolean validateLastName(String lastName) {
 		try {
 			if (lastName.length() == 0) {
 				throw new LastNameValidationException(LastNameExceptionType.LASTNAME_EMPTY, "enter proper last name");
