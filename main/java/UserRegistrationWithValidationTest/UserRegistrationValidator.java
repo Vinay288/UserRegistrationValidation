@@ -51,61 +51,41 @@ public class UserRegistrationValidator {
 		}
 	};
 	
-//	public static boolean passwordValidation(String password) {
-//		
-//		try {
-//			if (password.length() == 0) {
-//				throw new PasswordValidationException(PasswordExceptionType.PASSWORD_EMPTY, "Enter proper password");
-//			}
-//			String passwordRegexString="^.*(?=.{8,})(?=..*[0-9])(?=..*[a-z])(?=.*[A-Z])(?=..[@#$%^&+=]).?.*$";
-//			patternString=passwordRegexString;
-//			if (validation.test(password))
-//				return true;
-//			else {
-//				throw new PasswordValidationException(PasswordExceptionType.PASSWORD_INVALID, "enter valid password");
-//			}
-//		} catch (NullPointerException e) {
-//			throw new PasswordValidationException(PasswordExceptionType.PASSWORD_NULL, "enter proper password");
-//		}
-//	}
-
-	public static boolean phoneValidation(String phoneNumber) {
+	public Function<String, Boolean> phoneNumberValidation=(s)->{
 		try {
-			if (phoneNumber.length() == 0) {
-				throw new PhoneNumberValidationException(PhoneNumberExceptionType.PHONENUMBER_EMPTY,
-						"enter valid phonenumber");
+			String patternString="^[0-9]{1,2}\\s[0-9]{10}";
+			if(s.length()==0) {
+				throw new PhoneNumberValidationException(PhoneNumberExceptionType.PHONENUMBER_EMPTY, "Enter proper phonenumber");
 			}
-			String phoneValidation = "^[0-9]{1,2}\\s[0-9]{10}";
-			patternString=phoneValidation;
-			if (validation.test(phoneNumber))
+			if(Pattern.matches(patternString, s))
 				return true;
 			else
-				throw new PhoneNumberValidationException(PhoneNumberExceptionType.PHONENUMBER_INVALID,
-						"enter valid phonenumber");
-
-		} catch (NullPointerException e) {
-			throw new PhoneNumberValidationException(PhoneNumberExceptionType.PHONENUMBER_NULL,
-					"enter valid phonenumber");
+				throw new PhoneNumberValidationException(PhoneNumberExceptionType.PHONENUMBER_INVALID, "enter valid phone number");
 		}
-	}
-
-//	public static boolean emailValidation(String email) {
+		catch(NullPointerException e) {
+			throw new PhoneNumberValidationException(PhoneNumberExceptionType.PHONENUMBER_NULL, "enter proper phone number");
+		}
+	};
+	
+//	public static boolean phoneValidation(String phoneNumber) {
 //		try {
-//			if (email.length() == 0) {
-//				throw new EmailValidationException(EmailValidationExceptionType.EMAIL_EMPTY, "enter proper email");
+//			if (phoneNumber.length() == 0) {
+//				throw new PhoneNumberValidationException(PhoneNumberExceptionType.PHONENUMBER_EMPTY,
+//						"enter valid phonenumber");
 //			}
-//			String emailValidation = "abc([-//.//+]?[a-z0-9]+)?\\@[a-z0-9]+\\.[a-z]{2,}(\\.[a-z]+)?";
-//			patternString=emailValidation;
-//			if (validation.test(email))
+//			String phoneValidation = "^[0-9]{1,2}\\s[0-9]{10}";
+//			patternString=phoneValidation;
+//			if (validation.test(phoneNumber))
 //				return true;
-//			else {
-//				throw new EmailValidationException(EmailValidationExceptionType.EMAIL_INVALID, "enter proper email");
-//			}
+//			else
+//				throw new PhoneNumberValidationException(PhoneNumberExceptionType.PHONENUMBER_INVALID,
+//						"enter valid phonenumber");
+//
 //		} catch (NullPointerException e) {
-//			throw new EmailValidationException(EmailValidationExceptionType.EMAIL_NULL, "enter proper email");
+//			throw new PhoneNumberValidationException(PhoneNumberExceptionType.PHONENUMBER_NULL,
+//					"enter valid phonenumber");
 //		}
 //	}
-
 	public static boolean validateFirstName(String firstName) {
 		try {
 			if (firstName.length() == 0)
