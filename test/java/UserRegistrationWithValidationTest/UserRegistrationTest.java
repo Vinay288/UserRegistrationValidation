@@ -177,7 +177,7 @@ public class UserRegistrationTest {
 		UserRegistrationValidator validator = new UserRegistrationValidator();
 		boolean result = false;
 		try {
-			result = validator.emailValidation("abc.xyz@bl.co.in");
+			result = validator.emailValidation.apply("abc.xyz@bl.co.in");
 		} catch (EmailValidationException e) {
 			e.printStackTrace();
 		}
@@ -189,7 +189,7 @@ public class UserRegistrationTest {
 		UserRegistrationValidator validator = new UserRegistrationValidator();
 		boolean result;
 		try {
-			result = validator.emailValidation(null);
+			result = validator.emailValidation.apply(null);
 		} catch (EmailValidationException e) {
 			Assert.assertEquals(EmailValidationExceptionType.EMAIL_NULL, e.type);
 		}
@@ -200,7 +200,7 @@ public class UserRegistrationTest {
 		UserRegistrationValidator validator = new UserRegistrationValidator();
 		boolean result;
 		try {
-			result = validator.emailValidation("");
+			result = validator.emailValidation.apply("");
 		} catch (EmailValidationException e) {
 			Assert.assertEquals(EmailValidationExceptionType.EMAIL_EMPTY, e.type);
 		}
@@ -211,7 +211,7 @@ public class UserRegistrationTest {
 		UserRegistrationValidator validator = new UserRegistrationValidator();
 		boolean result;
 		try {
-			result = validator.emailValidation("xyz@bl.co.in");
+			result = validator.emailValidation.apply("xyz@bl.co.in");
 		} catch (EmailValidationException e) {
 			Assert.assertEquals(EmailValidationExceptionType.EMAIL_INVALID, e.type);
 		}
@@ -222,7 +222,7 @@ public class UserRegistrationTest {
 		UserRegistrationValidator validator = new UserRegistrationValidator();
 		boolean result;
 		try {
-			result = validator.emailValidation("abc.xyz@co.in");
+			result = validator.emailValidation.apply("abc.xyz@co.in");
 		} catch (EmailValidationException e) {
 			Assert.assertEquals(EmailValidationExceptionType.EMAIL_INVALID, e.type);
 		}
@@ -233,7 +233,7 @@ public class UserRegistrationTest {
 		UserRegistrationValidator validator = new UserRegistrationValidator();
 		boolean result = false;
 		try {
-			result = validator.emailValidation("abc.xyz@vi");
+			result = validator.emailValidation.apply("abc.xyz@vi");
 		} catch (EmailValidationException e) {
 			Assert.assertEquals(EmailValidationExceptionType.EMAIL_INVALID, e.type);
 		}
@@ -244,7 +244,7 @@ public class UserRegistrationTest {
 		UserRegistrationValidator validator = new UserRegistrationValidator();
 		boolean result = false;
 		try {
-			result = validator.emailValidation("abc@bl.co.in");
+			result = validator.emailValidation.apply("abc@bl.co.in");
 		} catch (EmailValidationException e) {
 			e.printStackTrace();
 		}
@@ -256,7 +256,7 @@ public class UserRegistrationTest {
 		UserRegistrationValidator validator = new UserRegistrationValidator();
 		boolean result = false;
 		try {
-			result = validator.emailValidation("abc@bl.co");
+			result = validator.emailValidation.apply("abc@bl.co");
 		} catch (EmailValidationException e) {
 			e.printStackTrace();
 		}
@@ -268,7 +268,7 @@ public class UserRegistrationTest {
 		UserRegistrationValidator validator = new UserRegistrationValidator();
 		boolean result;
 		try {
-			result = validator.emailValidation("abcbl.co@.co");
+			result = validator.emailValidation.apply("abcbl.co@.co");
 		} catch (EmailValidationException e) {
 			Assert.assertEquals(EmailValidationExceptionType.EMAIL_INVALID, e.type);
 		}
@@ -279,7 +279,7 @@ public class UserRegistrationTest {
 		UserRegistrationValidator validator = new UserRegistrationValidator();
 		boolean result;
 		try {
-			result = validator.emailValidation("abc.xyz@vico.in.");
+			result = validator.emailValidation.apply("abc.xyz@vico.in.");
 		} catch (EmailValidationException e) {
 			Assert.assertEquals(EmailValidationExceptionType.EMAIL_INVALID, e.type);
 		}
