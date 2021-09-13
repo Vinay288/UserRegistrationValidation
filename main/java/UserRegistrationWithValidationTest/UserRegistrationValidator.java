@@ -3,6 +3,8 @@
  */
 package UserRegistrationWithValidationTest;
 
+import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
 import UserRegistrationWithValidationTest.EmailValidationException.EmailValidationExceptionType;
@@ -12,21 +14,44 @@ import UserRegistrationWithValidationTest.PasswordValidationException.PasswordEx
 import UserRegistrationWithValidationTest.PhoneNumberValidationException.PhoneNumberExceptionType;
 
 public class UserRegistrationValidator {
-	public static boolean passwordValidation(String password) {
+
+	 static String patternString="^.*(?=.{8,})(?=..*[0-9])(?=..*[a-z])(?=.*[A-Z])(?=..[@#$%^&+=]).?.*$";
+	public static Predicate<String> validation= s->
+	Pattern.matches(patternString, s)==true;
+	
+	public Function<String, Boolean> passwordValidation=(s)->{
 		try {
-			if (password.length() == 0) {
+			String patternString="^.*(?=.{8,})(?=..*[0-9])(?=..*[a-z])(?=.*[A-Z])(?=..[@#$%^&+=]).?.*$";
+			if(s.length()==0) {
 				throw new PasswordValidationException(PasswordExceptionType.PASSWORD_EMPTY, "Enter proper password");
 			}
-			String passwordValidation = "^.*(?=.{8,})(?=..*[0-9])(?=..*[a-z])(?=.*[A-Z])(?=..[@#$%^&+=]).?.*$";
-			if (Pattern.matches(passwordValidation, password))
+			if(Pattern.matches(patternString, s))
 				return true;
-			else {
+			else
 				throw new PasswordValidationException(PasswordExceptionType.PASSWORD_INVALID, "enter valid password");
-			}
-		} catch (NullPointerException e) {
+		}
+		catch(NullPointerException e) {
 			throw new PasswordValidationException(PasswordExceptionType.PASSWORD_NULL, "enter proper password");
 		}
-	}
+	};
+	
+//	public static boolean passwordValidation(String password) {
+//		
+//		try {
+//			if (password.length() == 0) {
+//				throw new PasswordValidationException(PasswordExceptionType.PASSWORD_EMPTY, "Enter proper password");
+//			}
+//			String passwordRegexString="^.*(?=.{8,})(?=..*[0-9])(?=..*[a-z])(?=.*[A-Z])(?=..[@#$%^&+=]).?.*$";
+//			patternString=passwordRegexString;
+//			if (validation.test(password))
+//				return true;
+//			else {
+//				throw new PasswordValidationException(PasswordExceptionType.PASSWORD_INVALID, "enter valid password");
+//			}
+//		} catch (NullPointerException e) {
+//			throw new PasswordValidationException(PasswordExceptionType.PASSWORD_NULL, "enter proper password");
+//		}
+//	}
 
 	public static boolean phoneValidation(String phoneNumber) {
 		try {
@@ -35,7 +60,8 @@ public class UserRegistrationValidator {
 						"enter valid phonenumber");
 			}
 			String phoneValidation = "^[0-9]{1,2}\\s[0-9]{10}";
-			if (Pattern.matches(phoneValidation, phoneNumber))
+			patternString=phoneValidation;
+			if (validation.test(phoneNumber))
 				return true;
 			else
 				throw new PhoneNumberValidationException(PhoneNumberExceptionType.PHONENUMBER_INVALID,
@@ -53,7 +79,8 @@ public class UserRegistrationValidator {
 				throw new EmailValidationException(EmailValidationExceptionType.EMAIL_EMPTY, "enter proper email");
 			}
 			String emailValidation = "abc([-//.//+]?[a-z0-9]+)?\\@[a-z0-9]+\\.[a-z]{2,}(\\.[a-z]+)?";
-			if (Pattern.matches(emailValidation, email))
+			patternString=emailValidation;
+			if (validation.test(email))
 				return true;
 			else {
 				throw new EmailValidationException(EmailValidationExceptionType.EMAIL_INVALID, "enter proper email");
@@ -68,7 +95,8 @@ public class UserRegistrationValidator {
 			if (firstName.length() == 0)
 				throw new FirstNameValidationException(FirstNameExceptionType.FIRSTNAME_EMPTY, "Add proper first name");
 			String nameValidation = "^[A-Z][A-Za-z]{2,}$";
-			if (Pattern.matches(nameValidation, firstName))
+			patternString=nameValidation;
+			if (validation.test(firstName))
 				return true;
 			else {
 				throw new FirstNameValidationException(FirstNameExceptionType.FIRSTNAME_INVALID,
@@ -85,7 +113,8 @@ public class UserRegistrationValidator {
 				throw new LastNameValidationException(LastNameExceptionType.LASTNAME_EMPTY, "enter proper last name");
 			}
 			String nameValidation = "^[A-Z][A-Za-z]{2,}$";
-			if (Pattern.matches(nameValidation, lastName))
+			patternString=nameValidation;
+			if (validation.test(lastName))
 				return true;
 			else {
 				throw new LastNameValidationException(LastNameExceptionType.LASTNAME_INVALID, "enter proper last name");
