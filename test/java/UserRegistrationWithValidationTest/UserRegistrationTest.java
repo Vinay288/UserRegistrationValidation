@@ -3,6 +3,7 @@ package UserRegistrationWithValidationTest;
 
 import org.junit.Test;
 
+import UserRegistrationWithValidationTest.UserRegistrationValidator;
 import UserRegistrationWithValidationTest.EmailValidationException.EmailValidationExceptionType;
 import UserRegistrationWithValidationTest.FirstNameValidationException.FirstNameExceptionType;
 import UserRegistrationWithValidationTest.LastNameValidationException.LastNameExceptionType;
@@ -344,7 +345,7 @@ public class UserRegistrationTest {
 		UserRegistrationValidator validator = new UserRegistrationValidator();
 		boolean result = false;
 		try {
-			result = validator.passwordValidation("A1@abcdefgh");
+			result = validator.passwordValidation.apply("A1@abcdefgh");
 
 		} catch (PasswordValidationException e) {
 			e.printStackTrace();
@@ -356,7 +357,7 @@ public class UserRegistrationTest {
 	public void givenPassword_WhenNoCapitalLetter_ShouldThrowInvalidException() {
 		try {
 			UserRegistrationValidator validator = new UserRegistrationValidator();
-			boolean result = validator.passwordValidation("1@abcdefgh");
+			boolean result = validator.passwordValidation.apply("1@abcdefgh");
 		} catch (PasswordValidationException e) {
 			Assert.assertEquals(PasswordExceptionType.PASSWORD_INVALID, e.type);
 		}
@@ -366,7 +367,7 @@ public class UserRegistrationTest {
 	public void givenPassword_WhenNoNumberLetter_ShouldThrowInvalidException() {
 		try {
 			UserRegistrationValidator validator = new UserRegistrationValidator();
-			boolean result = validator.passwordValidation("A@abcdefgh");
+			boolean result = validator.passwordValidation.apply("A@abcdefgh");
 		} catch (PasswordValidationException e) {
 			Assert.assertEquals(PasswordExceptionType.PASSWORD_INVALID, e.type);
 		}
@@ -376,7 +377,7 @@ public class UserRegistrationTest {
 	public void givenPassword_WhenNoSpecialLetter_ShouldThrowInvalidException() {
 		try {
 			UserRegistrationValidator validator = new UserRegistrationValidator();
-			boolean result = validator.passwordValidation("1Aabcdefgh");
+			boolean result = validator.passwordValidation.apply("1Aabcdefgh");
 		} catch (PasswordValidationException e) {
 			Assert.assertEquals(PasswordExceptionType.PASSWORD_INVALID, e.type);
 		}
@@ -387,7 +388,7 @@ public class UserRegistrationTest {
 			throws PasswordValidationException {
 		try {
 			UserRegistrationValidator validator = new UserRegistrationValidator();
-			boolean result = validator.passwordValidation("1A@ab");
+			boolean result = validator.passwordValidation.apply("1A@ab");
 		} catch (PasswordValidationException e) {
 			Assert.assertEquals(PasswordExceptionType.PASSWORD_INVALID, e.type);
 		}
@@ -398,7 +399,7 @@ public class UserRegistrationTest {
 	public void givenPassword_WhenNull_ShouldThrowException() {
 		try {
 			UserRegistrationValidator validator = new UserRegistrationValidator();
-			boolean result = validator.passwordValidation(null);
+			boolean result = validator.passwordValidation.apply(null);
 		} catch (PasswordValidationException e) {
 			Assert.assertEquals(PasswordExceptionType.PASSWORD_NULL, e.type);
 		}
@@ -408,7 +409,7 @@ public class UserRegistrationTest {
 	public void givenPassword_WhenEmpty_ShouldThrowException() {
 		try {
 			UserRegistrationValidator validator = new UserRegistrationValidator();
-			boolean result = validator.passwordValidation("");
+			boolean result = validator.passwordValidation.apply("");
 		} catch (PasswordValidationException e) {
 			Assert.assertEquals(PasswordExceptionType.PASSWORD_EMPTY, e.type);
 		}
