@@ -35,6 +35,22 @@ public class UserRegistrationValidator {
 		}
 	};
 	
+	public Function<String, Boolean> emailValidation=(s)->{
+		try {
+			String patternString="abc([-//.//+]?[a-z0-9]+)?\\@[a-z0-9]+\\.[a-z]{2,}(\\.[a-z]+)?";
+			if(s.length()==0) {
+				throw new EmailValidationException(EmailValidationExceptionType.EMAIL_EMPTY, "Enter proper email");
+			}
+			if(Pattern.matches(patternString, s))
+				return true;
+			else
+				throw new EmailValidationException(EmailValidationExceptionType.EMAIL_INVALID, "enter valid email");
+		}
+		catch(NullPointerException e) {
+			throw new EmailValidationException(EmailValidationExceptionType.EMAIL_NULL, "enter proper email");
+		}
+	};
+	
 //	public static boolean passwordValidation(String password) {
 //		
 //		try {
@@ -73,22 +89,22 @@ public class UserRegistrationValidator {
 		}
 	}
 
-	public static boolean emailValidation(String email) {
-		try {
-			if (email.length() == 0) {
-				throw new EmailValidationException(EmailValidationExceptionType.EMAIL_EMPTY, "enter proper email");
-			}
-			String emailValidation = "abc([-//.//+]?[a-z0-9]+)?\\@[a-z0-9]+\\.[a-z]{2,}(\\.[a-z]+)?";
-			patternString=emailValidation;
-			if (validation.test(email))
-				return true;
-			else {
-				throw new EmailValidationException(EmailValidationExceptionType.EMAIL_INVALID, "enter proper email");
-			}
-		} catch (NullPointerException e) {
-			throw new EmailValidationException(EmailValidationExceptionType.EMAIL_NULL, "enter proper email");
-		}
-	}
+//	public static boolean emailValidation(String email) {
+//		try {
+//			if (email.length() == 0) {
+//				throw new EmailValidationException(EmailValidationExceptionType.EMAIL_EMPTY, "enter proper email");
+//			}
+//			String emailValidation = "abc([-//.//+]?[a-z0-9]+)?\\@[a-z0-9]+\\.[a-z]{2,}(\\.[a-z]+)?";
+//			patternString=emailValidation;
+//			if (validation.test(email))
+//				return true;
+//			else {
+//				throw new EmailValidationException(EmailValidationExceptionType.EMAIL_INVALID, "enter proper email");
+//			}
+//		} catch (NullPointerException e) {
+//			throw new EmailValidationException(EmailValidationExceptionType.EMAIL_NULL, "enter proper email");
+//		}
+//	}
 
 	public static boolean validateFirstName(String firstName) {
 		try {
