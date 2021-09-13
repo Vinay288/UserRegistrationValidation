@@ -290,7 +290,7 @@ public class UserRegistrationTest {
 		UserRegistrationValidator validator = new UserRegistrationValidator();
 		boolean result = false;
 		try {
-			result = validator.phoneValidation("91 9110473394");
+			result = validator.phoneNumberValidation.apply("91 9110473394");
 		} catch (PhoneNumberValidationException e) {
 			e.printStackTrace();
 		}
@@ -302,7 +302,7 @@ public class UserRegistrationTest {
 		UserRegistrationValidator validator = new UserRegistrationValidator();
 		boolean result;
 		try {
-			result = validator.phoneValidation(null);
+			result = validator.phoneNumberValidation.apply(null);
 		} catch (PhoneNumberValidationException e) {
 			Assert.assertEquals(PhoneNumberExceptionType.PHONENUMBER_NULL, e.type);
 		}
@@ -313,7 +313,7 @@ public class UserRegistrationTest {
 		UserRegistrationValidator validator = new UserRegistrationValidator();
 		boolean result;
 		try {
-			result = validator.phoneValidation("");
+			result = validator.phoneNumberValidation.apply("");
 		} catch (PhoneNumberValidationException e) {
 			Assert.assertEquals(PhoneNumberExceptionType.PHONENUMBER_EMPTY, e.type);
 		}
@@ -324,7 +324,7 @@ public class UserRegistrationTest {
 		UserRegistrationValidator validator = new UserRegistrationValidator();
 		boolean result;
 		try {
-			result = validator.phoneValidation("919110473394");
+			result = validator.phoneNumberValidation.apply("919110473394");
 		} catch (PhoneNumberValidationException e) {
 			Assert.assertEquals(PhoneNumberExceptionType.PHONENUMBER_INVALID, e.type);
 		}
@@ -334,7 +334,7 @@ public class UserRegistrationTest {
 	public void givenPhoneNumber_WhenLengthIsMore_ShouldThrowInvalidException() {
 		try {
 			UserRegistrationValidator validator = new UserRegistrationValidator();
-			boolean result = validator.phoneValidation("91 911047339454");
+			boolean result = validator.phoneNumberValidation.apply("91 911047339454");
 		} catch (PhoneNumberValidationException e) {
 			Assert.assertEquals(PhoneNumberExceptionType.PHONENUMBER_INVALID, e.type);
 		}
