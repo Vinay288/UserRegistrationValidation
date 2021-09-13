@@ -7,6 +7,8 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
+import org.checkerframework.checker.units.qual.s;
+
 import UserRegistrationWithValidationTest.EmailValidationException.EmailValidationExceptionType;
 import UserRegistrationWithValidationTest.FirstNameValidationException.FirstNameExceptionType;
 import UserRegistrationWithValidationTest.LastNameValidationException.LastNameExceptionType;
@@ -15,84 +17,63 @@ import UserRegistrationWithValidationTest.PhoneNumberValidationException.PhoneNu
 
 public class UserRegistrationValidator {
 
-	 static String patternString="^.*(?=.{8,})(?=..*[0-9])(?=..*[a-z])(?=.*[A-Z])(?=..[@#$%^&+=]).?.*$";
-	public static Predicate<String> validation= s->
-	Pattern.matches(patternString, s)==true;
-	
-	public Function<String, Boolean> passwordValidation=(s)->{
+	static String patternString = "^.*(?=.{8,})(?=..*[0-9])(?=..*[a-z])(?=.*[A-Z])(?=..[@#$%^&+=]).?.*$";
+	public static Predicate<String> validation = s -> Pattern.matches(patternString, s) == true;
+
+	public Function<String, Boolean> passwordValidation = (s) -> {
 		try {
-			String patternString="^.*(?=.{8,})(?=..*[0-9])(?=..*[a-z])(?=.*[A-Z])(?=..[@#$%^&+=]).?.*$";
-			if(s.length()==0) {
+			String patternString = "^.*(?=.{8,})(?=..*[0-9])(?=..*[a-z])(?=.*[A-Z])(?=..[@#$%^&+=]).?.*$";
+			if (s.length() == 0) {
 				throw new PasswordValidationException(PasswordExceptionType.PASSWORD_EMPTY, "Enter proper password");
 			}
-			if(Pattern.matches(patternString, s))
+			if (Pattern.matches(patternString, s))
 				return true;
 			else
 				throw new PasswordValidationException(PasswordExceptionType.PASSWORD_INVALID, "enter valid password");
-		}
-		catch(NullPointerException e) {
+		} catch (NullPointerException e) {
 			throw new PasswordValidationException(PasswordExceptionType.PASSWORD_NULL, "enter proper password");
 		}
 	};
-	
-	public Function<String, Boolean> emailValidation=(s)->{
+
+	public Function<String, Boolean> emailValidation = (s) -> {
 		try {
-			String patternString="abc([-//.//+]?[a-z0-9]+)?\\@[a-z0-9]+\\.[a-z]{2,}(\\.[a-z]+)?";
-			if(s.length()==0) {
+			String patternString = "abc([-//.//+]?[a-z0-9]+)?\\@[a-z0-9]+\\.[a-z]{2,}(\\.[a-z]+)?";
+			if (s.length() == 0) {
 				throw new EmailValidationException(EmailValidationExceptionType.EMAIL_EMPTY, "Enter proper email");
 			}
-			if(Pattern.matches(patternString, s))
+			if (Pattern.matches(patternString, s))
 				return true;
 			else
 				throw new EmailValidationException(EmailValidationExceptionType.EMAIL_INVALID, "enter valid email");
-		}
-		catch(NullPointerException e) {
+		} catch (NullPointerException e) {
 			throw new EmailValidationException(EmailValidationExceptionType.EMAIL_NULL, "enter proper email");
 		}
 	};
-	
-	public Function<String, Boolean> phoneNumberValidation=(s)->{
+
+	public Function<String, Boolean> phoneNumberValidation = (s) -> {
 		try {
-			String patternString="^[0-9]{1,2}\\s[0-9]{10}";
-			if(s.length()==0) {
-				throw new PhoneNumberValidationException(PhoneNumberExceptionType.PHONENUMBER_EMPTY, "Enter proper phonenumber");
+			String patternString = "^[0-9]{1,2}\\s[0-9]{10}";
+			if (s.length() == 0) {
+				throw new PhoneNumberValidationException(PhoneNumberExceptionType.PHONENUMBER_EMPTY,
+						"Enter proper phonenumber");
 			}
-			if(Pattern.matches(patternString, s))
+			if (Pattern.matches(patternString, s))
 				return true;
 			else
-				throw new PhoneNumberValidationException(PhoneNumberExceptionType.PHONENUMBER_INVALID, "enter valid phone number");
-		}
-		catch(NullPointerException e) {
-			throw new PhoneNumberValidationException(PhoneNumberExceptionType.PHONENUMBER_NULL, "enter proper phone number");
+				throw new PhoneNumberValidationException(PhoneNumberExceptionType.PHONENUMBER_INVALID,
+						"enter valid phone number");
+		} catch (NullPointerException e) {
+			throw new PhoneNumberValidationException(PhoneNumberExceptionType.PHONENUMBER_NULL,
+					"enter proper phone number");
 		}
 	};
-	
-//	public static boolean phoneValidation(String phoneNumber) {
-//		try {
-//			if (phoneNumber.length() == 0) {
-//				throw new PhoneNumberValidationException(PhoneNumberExceptionType.PHONENUMBER_EMPTY,
-//						"enter valid phonenumber");
-//			}
-//			String phoneValidation = "^[0-9]{1,2}\\s[0-9]{10}";
-//			patternString=phoneValidation;
-//			if (validation.test(phoneNumber))
-//				return true;
-//			else
-//				throw new PhoneNumberValidationException(PhoneNumberExceptionType.PHONENUMBER_INVALID,
-//						"enter valid phonenumber");
-//
-//		} catch (NullPointerException e) {
-//			throw new PhoneNumberValidationException(PhoneNumberExceptionType.PHONENUMBER_NULL,
-//					"enter valid phonenumber");
-//		}
-//	}
-	public static boolean validateFirstName(String firstName) {
+
+	public Function<String, Boolean> validateFirstName = s -> {
 		try {
-			if (firstName.length() == 0)
+			if (s.length() == 0)
 				throw new FirstNameValidationException(FirstNameExceptionType.FIRSTNAME_EMPTY, "Add proper first name");
 			String nameValidation = "^[A-Z][A-Za-z]{2,}$";
-			patternString=nameValidation;
-			if (validation.test(firstName))
+			if (Pattern.matches(nameValidation, s))
 				return true;
 			else {
 				throw new FirstNameValidationException(FirstNameExceptionType.FIRSTNAME_INVALID,
@@ -101,16 +82,15 @@ public class UserRegistrationValidator {
 		} catch (NullPointerException e) {
 			throw new FirstNameValidationException(FirstNameExceptionType.FIRSTNAME_NULL, "enter proper first name");
 		}
-	}
+	};
 
-	public static boolean validateLastName(String lastName) {
+	public Function<String, Boolean> validateLastName= s-> {
 		try {
-			if (lastName.length() == 0) {
+			if (s.length() == 0) {
 				throw new LastNameValidationException(LastNameExceptionType.LASTNAME_EMPTY, "enter proper last name");
 			}
 			String nameValidation = "^[A-Z][A-Za-z]{2,}$";
-			patternString=nameValidation;
-			if (validation.test(lastName))
+			if (Pattern.matches(nameValidation, s))
 				return true;
 			else {
 				throw new LastNameValidationException(LastNameExceptionType.LASTNAME_INVALID, "enter proper last name");
@@ -118,5 +98,5 @@ public class UserRegistrationValidator {
 		} catch (NullPointerException e) {
 			throw new LastNameValidationException(LastNameExceptionType.LASTNAME_NULL, "enter proper last name");
 		}
-	}
+	};
 }
